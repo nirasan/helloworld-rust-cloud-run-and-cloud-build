@@ -2,8 +2,6 @@ steps:
   - name: gcr.io/cloud-builders/docker
     args:
       - 'build'
-      - '-f'
-      - 'community/samples/serving/helloworld-rust/Dockerfile'
       - '-t'
       - 'gcr.io/$PROJECT_ID/helloworld:${SHORT_SHA}'
       - '.'
