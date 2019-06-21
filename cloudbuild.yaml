@@ -1,0 +1,21 @@
+steps:
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - 'build'
+      - '-f'
+      - 'community/samples/serving/helloworld-rust/Dockerfile'
+      - '-t'
+      - 'gcr.io/$PROJECT_ID/helloworld:${SHORT_SHA}'
+      - '.'
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ["push", "gcr.io/$PROJECT_ID/helloworld"]
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args:
+      - 'beta'
+      - 'run'
+      - 'deploy'
+      - 'helloworld'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/helloworld:${SHORT_SHA}'
+      - '--region'
+      - 'us-central1'
